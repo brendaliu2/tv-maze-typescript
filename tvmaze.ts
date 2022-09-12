@@ -16,9 +16,11 @@ interface ShowInterface {
   id: number;
   name: string;
   summary: string;
-  image: string;
+  image: {medium: string};
 }
 
+
+//TODO: Figure out syntax issue on line 24?
 async function getShowsByTerm(term: string): Promise<[{ score: number; }]> {
   const searchedShows = await axios.get(`${BASE_URL}/search/shows`, {params:{q:term}});
 
@@ -34,7 +36,7 @@ async function getShowsByTerm(term: string): Promise<[{ score: number; }]> {
 
 /** Given list of shows, create markup for each and to DOM */
 
-function populateShows(shows) {
+function populateShows(shows: ShowInterface[]): void {
   $showsList.empty();
 
   for (let show of shows) {
@@ -42,7 +44,7 @@ function populateShows(shows) {
       `<div data-show-id="${show.id}" class="Show col-md-12 col-lg-6 mb-4">
          <div class="media">
            <img
-              src="http://static.tvmaze.com/uploads/images/medium_portrait/160/401704.jpg"
+              src="${show.image.medium || "https://tinyurl.com/tv-missing"}"
               alt="Bletchly Circle San Francisco"
               class="w-25 me-3">
            <div class="media-body">
