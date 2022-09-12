@@ -12,6 +12,7 @@ const BASE_URL = 'https://api.tvmaze.com';
  *    Each show object should contain exactly: {id, name, summary, image}
  *    (if no image URL given by API, put in a default image URL)
  */
+
 interface ShowInterface {
   id: number;
   name: string;
@@ -19,9 +20,8 @@ interface ShowInterface {
   image: {medium: string};
 }
 
-
-//TODO: Figure out syntax issue on line 24?
-async function getShowsByTerm(term: string): Promise<[{ score: number; }]> {
+//is typing term redundant because its typing comes from JQuery?
+async function getShowsByTerm(term: string | string[] | number | undefined): Promise<[ShowInterface]> {
   const searchedShows = await axios.get(`${BASE_URL}/search/shows`, {params:{q:term}});
 
   const shows = searchedShows.data.map((s: { show: ShowInterface; }) => ({
@@ -36,7 +36,7 @@ async function getShowsByTerm(term: string): Promise<[{ score: number; }]> {
 
 /** Given list of shows, create markup for each and to DOM */
 
-function populateShows(shows: ShowInterface[]): void {
+function populateShows(shows: [ShowInterface]): void {
   $showsList.empty();
 
   for (let show of shows) {

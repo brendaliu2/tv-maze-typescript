@@ -12779,7 +12779,7 @@ var $showsList = $("#showsList");
 var $episodesArea = $("#episodesArea");
 var $searchForm = $("#searchForm");
 var BASE_URL = 'https://api.tvmaze.com';
-//TODO: Figure out syntax issue on line 24?
+//is typing term redundant because its typing comes from JQuery?
 function getShowsByTerm(term) {
     return __awaiter(this, void 0, void 0, function () {
         var searchedShows, shows;
